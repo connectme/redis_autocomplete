@@ -6,17 +6,16 @@ it to make suggestions given a search prefix.
 The algorithm used is orginally from Salvatore (antirez) Sanfilippo, the Redis author.
 http://antirez.com/post/autocomplete-with-redis.html
 
-RedisAutocomplete was written and maintained by simple10[http://github.com/simple10] Empact[http://github.com/Empact] for http://connect.me.
+RedisAutocomplete was written and maintained by simple10[http://github.com/simple10] and Empact[http://github.com/Empact] for http://connect.me.
 
 
 == Usage
 
-# initialize with the name of the redis set you want to use
-r = RedisAutocomplete.new(:tags)
-r.add_words(%w[developer, designer, dude, architect, baker, banker])
-r.suggest('de')
-# ['developer', 'designer']
-
+  # initialize with the name of the redis set you want to use
+  r = RedisAutocomplete.new(:tags)
+  r.add_words(%w[developer, designer, dude, architect, baker, banker])
+  r.suggest('de')
+  # ['developer', 'designer']
 
 == Copyright
 
