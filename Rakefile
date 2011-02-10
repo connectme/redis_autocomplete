@@ -15,14 +15,10 @@ Jeweler::Tasks.new do |gem|
   gem.name = "redis_autocomplete"
   gem.homepage = "http://github.com/connectme/redis_autocomplete"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Use Redis for fast autocomplete suggestions}
+  gem.description = %Q{Use Redis for fast autocomplete suggestions. Just add words to it and ask it to make suggestions given a search prefix. Originally packaged for http://connect.me.}
   gem.email = "joe@simple10.com"
-  gem.authors = ["Joe Johnston"]
-  # Include your dependencies below. Runtime dependencies are required when using your gem,
-  # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
-  #  gem.add_runtime_dependency 'jabber4r', '> 0.1'
-  #  gem.add_development_dependency 'rspec', '> 1.2.3'
+  gem.authors = ["Joe Johnston (simple10)", "Ben Woosley (Empact)", "Salvatore Sanfilippo (antirez)"]
 end
 Jeweler::RubygemsDotOrgTasks.new
 
