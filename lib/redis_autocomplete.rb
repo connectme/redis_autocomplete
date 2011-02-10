@@ -1,13 +1,16 @@
 require 'redis'
 
 class RedisAutocomplete
+  DEFAULT_DISALLOWED_CHARS = /[^a-zA-Z0-9_-]/
+  DEFAULT_TERMINAL = '+'
+
   attr_reader :redis, :terminal
 
-  def initialize(set, disallowed_chars = /[^a-zA-Z0-9_-]/, terminal = '+')
+  def initialize(set, opts = {})
     @set = set
     @redis = Redis.new
-    @disallowed_chars = disallowed_chars
-    @terminal = terminal
+    @disallowed_chars = opts[:disallowed_chars] || DEFAULT_DISALLOWED_CHARS
+    @terminal = opts[:terminal] || DEFAULT_TERMINAL
   end
 
   def add_word(word)
