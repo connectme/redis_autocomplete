@@ -1,20 +1,19 @@
 require 'redis'
 
 class RedisAutocomplete
-  TERMINAL = '+'
+  attr_reader :redis, :terminal
 
-  attr_reader :redis
-
-  def initialize(set, disallowed_chars = nil)
+  def initialize(set, disallowed_chars = /[^a-zA-Z0-9_-]/, terminal = '+')
     @set = set
     @redis = Redis.new
-    @disallowed_chars = disallowed_chars || /[^a-zA-Z0-9_-]/
+    @disallowed_chars = disallowed_chars
+    @terminal = terminal
   end
 
   def add_word(word)
     w = word.gsub(@disallowed_chars, '')
     (1..(w.length)).each { |i| @redis.zadd(@set, 0, w.slice(0, i)) }
-    @redis.zadd(@set, 0, "#{w}#{TERMINAL}")
+    @redis.zadd(@set, 0, "#{w}#{@terminal}")
   end
 
   def add_words(*words)
@@ -36,8 +35,8 @@ class RedisAutocomplete
           count = results.count
           break
         end
-        if entry[-1] == TERMINAL and results.length != count
-          results << entry.chomp(TERMINAL)
+        if entry[-1] == @terminal and results.length != count
+          results << entry.chomp(@terminal)
         end
       end
     end
