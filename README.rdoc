@@ -1,16 +1,22 @@
-= redis_autocomplete
+= About
 
-Description goes here.
+RedisAutocomplete is a simple gem for extremely fast autocomplete suggestions. Just add words to it and ask 
+it to make suggestions given a search prefix.
 
-== Contributing to redis_autocomplete
- 
-* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
-* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
-* Fork the project
-* Start a feature/bugfix branch
-* Commit and push until you are happy with your contribution
-* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
-* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+The algorithm used is orginally from Salvatore (antirez) Sanfilippo, the Redis author.
+http://antirez.com/post/autocomplete-with-redis.html
+
+RedisAutocomplete was written and maintained by simple10[http://github.com/simple10] Empact[http://github.com/Empact] for http://connect.me.
+
+
+== Usage
+
+# initialize with the name of the redis set you want to use
+r = RedisAutocomplete.new(:tags)
+r.add_words(%w[developer, designer, dude, architect, baker, banker])
+r.suggest('de')
+# ['developer', 'designer']
+
 
 == Copyright
 
