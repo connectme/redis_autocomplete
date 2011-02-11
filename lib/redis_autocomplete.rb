@@ -3,6 +3,7 @@ require 'redis'
 class RedisAutocomplete
   DEFAULT_DISALLOWED_CHARS = /[^a-zA-Z0-9_-]/
   DEFAULT_TERMINAL = '+'
+  DEFAULT_CASE_SENSITIVITY = true
 
   attr_reader :redis, :terminal
 
@@ -11,10 +12,12 @@ class RedisAutocomplete
     @redis = Redis.new
     @disallowed_chars = opts[:disallowed_chars] || DEFAULT_DISALLOWED_CHARS
     @terminal = opts[:terminal] || DEFAULT_TERMINAL
+    @case_sensitive = opts[:case_sensitive].nil? ? DEFAULT_CASE_SENSITIVITY : opts[:case_sensitive]
   end
 
   def add_word(word)
     w = word.gsub(@disallowed_chars, '')
+    w.downcase! if !@case_sensitive
     (1..(w.length)).each { |i| @redis.zadd(@set, 0, w.slice(0, i)) }
     @redis.zadd(@set, 0, "#{w}#{@terminal}")
   end
