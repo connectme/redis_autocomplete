@@ -26,6 +26,21 @@ class RedisAutocomplete
   def add_words(words, set_name = nil)
     words.flatten.compact.uniq.each { |word| add_word word, set_name }
   end
+  
+  def remove_word(word, set_name = nil, remove_stems = true)
+    set_name ||= @set_name
+    @redis.zrem(set_name, "#{word}#{@terminal}")
+    # remove_word_stem is inefficient and is best done later on with a cron job
+    remove_word_stem(word, set_name) if remove_stems
+  end
+  
+  def remove_word_stem(stem, set_name)
+    if suggest(stem, 1, set_name).empty?
+      @redis.zrem(set_name, stem)
+      remove_word_stem(stem[0...-1], set_name)
+    end    
+  end
+  protected :remove_word_stem
 
   def suggest(prefix, count = 10, set_name = nil)
     set_name ||= @set_name

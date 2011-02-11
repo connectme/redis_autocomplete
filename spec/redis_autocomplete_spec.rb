@@ -78,6 +78,45 @@ describe RedisAutocomplete do
         end
       end
     end
+    
+    describe "#remove_word" do
+      context "with default options" do
+        before do
+          @r.remove_word('Catherine')
+        end
+      
+        it "should not include word after removing it" do
+          @r.suggest('Cath').should_not include('Catherine')
+        end
+      
+        it "should remove unique word stems" do
+          @r.redis.zrank(@set, 'Catherine').should be_nil
+          @r.redis.zrank(@set, 'Catheri').should == nil
+          @r.redis.zrank(@set, 'Cather').should == nil
+          @r.redis.zrank(@set, 'Cathe').should == nil
+          @r.redis.zrank(@set, 'Cath').should_not == nil
+        end
+      end
+      
+      context "when remove_stems is false" do
+        before do
+          @r.remove_word('Catherine', nil, false)
+        end
+
+        it "should not include word after removing it" do
+          @r.suggest('Cath').should_not include('Catherine')
+        end
+
+        it "should remove unique word stems" do
+          @r.redis.zrank(@set, 'Catherine+').should be_nil
+          @r.redis.zrank(@set, 'Catherine').should_not be_nil
+          @r.redis.zrank(@set, 'Catheri').should_not be_nil
+          @r.redis.zrank(@set, 'Cather').should_not be_nil
+          @r.redis.zrank(@set, 'Cathe').should_not be_nil
+          @r.redis.zrank(@set, 'Cath').should_not be_nil
+        end
+      end
+    end
   end
 
   context "with :case_sensitive => false" do
