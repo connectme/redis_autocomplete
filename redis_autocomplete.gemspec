@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{redis_autocomplete}
-  s.version = "0.1.1"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Joe Johnston (simple10)", "Ben Woosley (Empact)", "Salvatore Sanfilippo (antirez)"]
