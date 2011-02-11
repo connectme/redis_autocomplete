@@ -38,7 +38,7 @@ describe RedisAutocomplete do
 
   context "with default case sensitivity" do
     before do
-      @r = RedisAutocomplete.new(@set)
+      @r = RedisAutocomplete.new(:set_name => @set)
       @r.redis.zremrangebyscore(@set, 0, 0)
       @r.add_words(@names)
     end
@@ -82,7 +82,7 @@ describe RedisAutocomplete do
 
   context "with :case_sensitive => false" do
     before do
-      @r = RedisAutocomplete.new(@set, :case_sensitive => false)
+      @r = RedisAutocomplete.new(:set_name => @set, :case_sensitive => false)
       @r.redis.zremrangebyscore(@set, 0, 0)
       @r.add_words(@names)
     end

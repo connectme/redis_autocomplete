@@ -12,7 +12,7 @@ RedisAutocomplete was written and maintained by simple10[http://github.com/simpl
 == Usage
 
   # initialize with the name of the redis set you want to use
-  r = RedisAutocomplete.new(:tags)
+  r = RedisAutocomplete.new(:set_name => :tags)
   r.add_words(%w[developer, designer, dude, architect, baker, banker])
   r.suggest('de')
   # ['developer', 'designer']
